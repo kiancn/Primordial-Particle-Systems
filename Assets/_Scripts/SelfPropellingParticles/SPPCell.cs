@@ -8,10 +8,12 @@ using Object = UnityEngine.Object;
 /*  */
 public class SPPCell : MonoBehaviour
 {
-    [SerializeField] private SPPFieldManager _manager;
+    [field: SerializeField] public SPPFieldManager Manager { get; private set; }
     [SerializeField] private SpriteRenderer _renderer;
     private Collider2D thisCollider;
     private Transform thisTransform;
+
+    public int currentNumberOfNeighbors = 0;
     
     [SerializeField] private String managerName;
 
@@ -32,7 +34,7 @@ public class SPPCell : MonoBehaviour
             SPPFieldManager manager = managerCarrier.GetComponent<SPPFieldManager>();
             if (manager != null)
             {
-                _manager = manager;
+                Manager = manager;
             }
             else
             {
@@ -51,17 +53,17 @@ public class SPPCell : MonoBehaviour
         thisCollider = GetComponent<Collider2D>();
         thisTransform = transform;
 
-        if (_manager != null)
+        if (Manager != null)
         {
-            _manager.Cells.Add(this);
+            Manager.Cells.Add(this);
         }
     }
 
     private void OnDisable()
     {
-        if (_manager != null)
+        if (Manager != null)
         {
-            _manager.Cells.Remove(this);
+            Manager.Cells.Remove(this);
         }
     }
 

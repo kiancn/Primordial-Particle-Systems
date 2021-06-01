@@ -90,10 +90,6 @@ public class SPPFieldManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-    }
-
     private void Awake()
     {
         // Application.SetStackTraceLogType(LogType.Log, StackTraceLogType.Full);
@@ -148,6 +144,7 @@ public class SPPFieldManager : MonoBehaviour
 
             var rotation = cellTransform.rotation;
 
+            cell.currentNumberOfNeighbors = (int)neighborCount;
 
             cellTransform.SetPositionAndRotation(
                 position + new Vector3(Mathf.Cos(rotation.eulerAngles.z), Mathf.Sin(rotation.eulerAngles.z), 0) *

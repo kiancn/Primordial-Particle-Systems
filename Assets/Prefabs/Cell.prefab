@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3366827112720137791}
   - component: {fileID: 3366827112720137778}
   - component: {fileID: 3366827112720137779}
+  - component: {fileID: 8994160893881408324}
   m_Layer: 6
   m_Name: Cell
   m_TagString: Untagged
@@ -97,9 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2724668828aa049ada7b6c541b350f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  <Manager>k__BackingField: {fileID: 0}
   _renderer: {fileID: 0}
+  currentNumberOfNeighbors: 0
   managerName: FieldManager A
+  <CellGrade>k__BackingField: 0
 --- !u!58 &3366827112720137778
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -137,3 +140,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8994160893881408324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3366827112720137790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7f1e3ca1fd0b940874bd2f5ca1d18f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoPanel: {fileID: 0}
+  cell: {fileID: 0}

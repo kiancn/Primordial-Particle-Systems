@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 0f615c1404b3a724a9706ade733bbc77
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Cabal
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b3177d8d9f580084ea5e72594ab48c0e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

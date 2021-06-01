@@ -57,14 +57,14 @@ public class CraftingBroker : MonoBehaviour
 
         /* add points to player stats */
 
-        stats.FoodPointChange(20);
+        stats.FoodPointChange(6);
     }
 
     /* 20 shiphull points cost 5 C cells and 2 D cells */
     public void AttemptToCraftHullPoints()
     {
         /* check if enough points are available */
-        bool sufficientResources = inventory.state2Cells >= 5 && inventory.state3Cells >= 2;
+        bool sufficientResources = inventory.state2Cells >= 5;
 
         /* if points are not available, bail */
         if (!sufficientResources)
@@ -74,21 +74,19 @@ public class CraftingBroker : MonoBehaviour
 
         /* remove points from inventory */
         inventory.state2Cells -= 5;
-        inventory.state3Cells -= 2;
 
         /* update canvas text */
-        textUpdater.UpdateCell3Text(inventory.state2Cells); // 
-        textUpdater.UpdateCell4Text(inventory.state3Cells); //
+        textUpdater.UpdateCell3Text(inventory.state2Cells); //
 
         /* add points to player stats */
-        stats.HullPointChange(20);
+        stats.HullPointChange(25);
     }
     
-/* Crafting bullets cost 3 state E (4)*/
+/* Crafting bullets cost 1B 2C 1D */
     public void AttemptToCraftBullets()
     {
         /* check if enough points are available */
-        bool sufficientResources = inventory.state4Cells >= 3;
+        bool sufficientResources = inventory.state1Cells >= 1 && inventory.state2Cells >= 2 && inventory.state3Cells >=1;
         /* if points are not available, bail */
         if (!sufficientResources)
         {
@@ -96,12 +94,16 @@ public class CraftingBroker : MonoBehaviour
         }
 
         /* remove points from inventory */
-        inventory.state4Cells -= 3;
+        inventory.state1Cells -= 1;
+        inventory.state2Cells -= 2;
+        inventory.state3Cells -= 1;
         
         /* update canvas text */
-        textUpdater.UpdateCell5Text(inventory.state4Cells);
+        textUpdater.UpdateCell2Text(inventory.state3Cells);
+        textUpdater.UpdateCell3Text(inventory.state3Cells);
+        textUpdater.UpdateCell4Text(inventory.state3Cells);
 
         /* add points to player stats */
-        stats.BulletNumberChange(10);
+        stats.BulletNumberChange(30);
     }
 }

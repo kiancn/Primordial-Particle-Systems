@@ -15,8 +15,11 @@ public class CameraMotivity : MonoBehaviour
     [SerializeField] private Camera _camera;
 
     [SerializeField] private bool followCamera = true;
+    [SerializeField] private float followSpeed = 3f;
 
     [SerializeField] private GameObject followObject;
+
+    [SerializeField] private bool hardFollow = false;
 
 
     // Update is called once per frame
@@ -57,8 +60,20 @@ public class CameraMotivity : MonoBehaviour
         else if (followObject && followObject != null)
         {
             var folPos = followObject.transform.position;
-            // doing a hard follow
-            _camera.transform.SetPositionAndRotation(new Vector3(folPos.x, folPos.y,_camera.transform.position.z),_camera.transform.rotation);
+            if (hardFollow)
+            {
+                
+                // doing a hard follow
+                _camera.transform.SetPositionAndRotation(new Vector3(folPos.x, folPos.y, _camera.transform.position.z),
+                    _camera.transform.rotation);
+            }
+            else
+            {
+                folPos.z = _camera.transform.position.z;
+
+                Vector3 lerpedMove = Vector3.Lerp(_camera.transform.position, folPos, followSpeed * Time.deltaTime);
+                _camera.transform.SetPositionAndRotation(lerpedMove,Quaternion.identity);
+            }
         }
     }
 }
