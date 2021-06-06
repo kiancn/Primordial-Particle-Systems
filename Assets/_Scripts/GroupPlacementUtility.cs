@@ -14,7 +14,9 @@ public class GroupPlacementUtility : MonoBehaviour
     [SerializeField] private KeyCode assistKey = KeyCode.LeftShift;
     
     [SerializeField] private bool useAssistKey = true;
-   
+
+    private bool hitUI = false;
+    
     // Start is called before the first frame update
     void Start()
     {

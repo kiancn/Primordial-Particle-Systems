@@ -19,9 +19,13 @@ public class SpawnWithinDiameter : MonoBehaviour
 
     private int spawnNumberCurrent;
 
+    [SerializeField] private float timeBeforeFirstUpdate = 0.1f;
+    private float currentSceneRunTime;
+
 
     void OnEnable()
     {
+        currentSceneRunTime = 0f;
         spawnNumberCurrent = 0;
         
         if (thingToPlace == null)
@@ -43,18 +47,23 @@ public class SpawnWithinDiameter : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        secondsSinceLastSpawn = secondsSinceLastSpawn + Time.deltaTime;
-
-        if (secondsSinceLastSpawn > secondsBetweenSpawns && spawnNumberCurrent < spawnNumberLimit)
+        currentSceneRunTime += Time.deltaTime;
+        if (currentSceneRunTime > timeBeforeFirstUpdate)
         {
-            var circRandPos = Random.insideUnitCircle * (radius * Random.value);
-            var newObject = Instantiate(thingToPlace,
-                new Vector3(circRandPos.x - ownTransform.position.x, circRandPos.y - ownTransform.position.y, 0),
-                Quaternion.identity);
-            newObject.SetActive(true);
-            secondsSinceLastSpawn = 0f;
 
-            spawnNumberCurrent++;
+            secondsSinceLastSpawn = secondsSinceLastSpawn + Time.deltaTime;
+
+            if (secondsSinceLastSpawn > secondsBetweenSpawns && spawnNumberCurrent < spawnNumberLimit)
+            {
+                var circRandPos = Random.insideUnitCircle * (radius * Random.value);
+                var newObject = Instantiate(thingToPlace,
+                    new Vector3(circRandPos.x + ownTransform.position.x, circRandPos.y + ownTransform.position.y, 0),
+                    Quaternion.identity);
+                newObject.SetActive(true);
+                secondsSinceLastSpawn = 0f;
+
+                spawnNumberCurrent++;
+            }
         }
     }
 }

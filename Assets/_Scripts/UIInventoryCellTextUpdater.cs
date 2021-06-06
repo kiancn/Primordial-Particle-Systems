@@ -15,6 +15,7 @@ public class UIInventoryCellTextUpdater : MonoBehaviour
     public void UpdateCell1Text(int newValue)
     {
         inventoryCell1Text.text = newValue.ToString();
+        
     }
 
     public void UpdateCell2Text(int newValue)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /* Class instance takes care of handling requests for food points, hull points or bullets - and grant them if possible.
  Crafting is accessible via both keyboard shortcuts and key presses.
@@ -17,6 +18,11 @@ public class CraftingBroker : MonoBehaviour
 
     [SerializeField] private UIInventoryCellTextUpdater textUpdater;
 
+    [SerializeField] private UnityEvent onCraftingFail;
+    [SerializeField] private UnityEvent onCraftingSuccessFood;
+    [SerializeField] private UnityEvent onCraftingSuccessHull;
+    [SerializeField] private UnityEvent onCraftingSuccessBullets;
+    
     // Update is called once per frame
     void Update()
     {
@@ -45,6 +51,7 @@ public class CraftingBroker : MonoBehaviour
         /* if points are not available, bail */
         if (!sufficientResources)
         {
+            onCraftingFail.Invoke();
             return;
         }
 
@@ -58,6 +65,8 @@ public class CraftingBroker : MonoBehaviour
         /* add points to player stats */
 
         stats.FoodPointChange(6);
+        
+        onCraftingSuccessFood.Invoke();
     }
 
     /* 20 shiphull points cost 5 C cells and 2 D cells */
@@ -69,6 +78,7 @@ public class CraftingBroker : MonoBehaviour
         /* if points are not available, bail */
         if (!sufficientResources)
         {
+            onCraftingFail.Invoke();
             return;
         }
 
@@ -80,6 +90,8 @@ public class CraftingBroker : MonoBehaviour
 
         /* add points to player stats */
         stats.HullPointChange(25);
+
+        onCraftingSuccessHull.Invoke();
     }
     
 /* Crafting bullets cost 1B 2C 1D */
@@ -90,6 +102,7 @@ public class CraftingBroker : MonoBehaviour
         /* if points are not available, bail */
         if (!sufficientResources)
         {
+            onCraftingFail.Invoke();
             return;
         }
 
@@ -99,11 +112,13 @@ public class CraftingBroker : MonoBehaviour
         inventory.state3Cells -= 1;
         
         /* update canvas text */
-        textUpdater.UpdateCell2Text(inventory.state3Cells);
-        textUpdater.UpdateCell3Text(inventory.state3Cells);
+        textUpdater.UpdateCell2Text(inventory.state1Cells);
+        textUpdater.UpdateCell3Text(inventory.state2Cells);
         textUpdater.UpdateCell4Text(inventory.state3Cells);
 
         /* add points to player stats */
         stats.BulletNumberChange(30);
+        
+        onCraftingSuccessBullets.Invoke();
     }
 }

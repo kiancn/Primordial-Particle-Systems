@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -14,7 +15,7 @@ public class SPPCell : MonoBehaviour
     private Transform thisTransform;
 
     public int currentNumberOfNeighbors = 0;
-    
+
     [SerializeField] private String managerName;
 
     [field: SerializeField] public int CellGrade { get; set; }
@@ -25,8 +26,7 @@ public class SPPCell : MonoBehaviour
 
     private void OnEnable()
     {
-        
-        // _manager = Object.FindObjectOfType<SPPFieldManager>();
+         // _manager = Object.FindObjectOfType<SPPFieldManager>();
 
         GameObject managerCarrier = GameObject.Find(managerName);
         if (managerCarrier != null)
@@ -41,7 +41,6 @@ public class SPPCell : MonoBehaviour
                 Debug.Log("No Manager Assigned to Cell, this is bad. Self-destructing.");
                 Destroy(this);
             }
-            
         }
         else
         {
@@ -53,22 +52,30 @@ public class SPPCell : MonoBehaviour
         thisCollider = GetComponent<Collider2D>();
         thisTransform = transform;
 
-        if (Manager != null)
-        {
-            Manager.Cells.Add(this);
-        }
+        // if (Manager != null)
+        // {
+        //     SPPCell[] newCells = new SPPCell[Manager.Cells.Length+1];
+        //     
+        //     Manager.Cells.CopyTo(newCells,0);
+        //     newCells[newCells.Length-1] = this;
+        //
+        //     Manager.Cells = newCells;
+        //     
+        //     //Manager.Cells.Add(this);
+        // }
     }
 
     private void OnDisable()
     {
-        if (Manager != null)
+     //   if (Manager != null)
         {
-            Manager.Cells.Remove(this);
+       //     Manager.Cells = Array.FindAll(Manager.Cells, (x) => { return this != x; }).ToArray();
+                //Manager.Cells.Remove(this);
         }
     }
 
     private void OnDestroy()
     {
-        OnDisable();
+     //   OnDisable();
     }
 }

@@ -37,7 +37,7 @@ public class SPPUIPanelTextUpdater : MonoBehaviour
 
         if (_timeCounter > textUpdateIntervalSeconds)
         {
-            cellsInTotalText.text = sppFieldManager.Cells.Count.ToString();
+            cellsInTotalText.text = sppFieldManager.Cells.Length.ToString();
             _timeCounter = 0f;
         }
     }

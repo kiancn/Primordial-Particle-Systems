@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -9,7 +10,9 @@ using UnityEngine.Serialization;
 
 public class SPPFieldManager : MonoBehaviour
 {
-    [SerializeField] private List<SPPCell> cells; // unimplemented
+    [SerializeField] public static SPPCell[] cells; // unimplemented
+
+    [SerializeField] private int cellAmount;
 
     [SerializeField] private float xMin = -8f;
     [SerializeField] private float xMax = 8f;
@@ -27,6 +30,30 @@ public class SPPFieldManager : MonoBehaviour
     [SerializeField] private Color color10_15;
     [SerializeField] private Color color16_25;
     [SerializeField] private Color color26_up;
+
+    [SerializeField] private int framesPerListUpdate = 10;
+    private int framesSinceCellListUpdate = 0;
+
+    private List<SPPCell> combinedList;
+
+    private SPPFieldManager[] _managers;
+
+    private void Awake()
+    {
+        cells = new SPPCell[0];
+
+        // cells = new SPPCell[0];
+        // if (useCombinedManagerLists)
+        // {
+        //     _managers = FindObjectsOfType<SPPFieldManager>();
+        // }
+
+        // Application.SetStackTraceLogType(LogType.Log, StackTraceLogType.Full);
+        // Application.SetStackTraceLogType(LogType.Warning, StackTraceLogType.Full);
+        // Application.SetStackTraceLogType(LogType.Error, StackTraceLogType.Full);
+        // Application.SetStackTraceLogType(LogType.Exception, StackTraceLogType.Full);
+    }
+
 
     [BurstCompile(Debug = false)]
     public struct NeighborJob : IJob, IDisposable
@@ -78,7 +105,7 @@ public class SPPFieldManager : MonoBehaviour
             }
 
             deltaRotation = fixedCellRotation +
-                            perNeighborRotation * numberOfNeighbors * Mathf.Sign(neighborCoefficient + 1);
+                            perNeighborRotation * numberOfNeighbors * Mathf.Sign(neighborCoefficient - 1);
 
             resultInfo[0] = numberOfNeighbors - 1;
             resultInfo[1] = deltaRotation;
@@ -90,13 +117,6 @@ public class SPPFieldManager : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        // Application.SetStackTraceLogType(LogType.Log, StackTraceLogType.Full);
-        // Application.SetStackTraceLogType(LogType.Warning, StackTraceLogType.Full);
-        // Application.SetStackTraceLogType(LogType.Error, StackTraceLogType.Full);
-        // Application.SetStackTraceLogType(LogType.Exception, StackTraceLogType.Full);
-    }
 
     private NeighborJob data;
     private List<JobHandle> _handles = new List<JobHandle>();
@@ -104,12 +124,11 @@ public class SPPFieldManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        var deltaTime = Time.deltaTime;
+        
 
-        var cells = FindObjectsOfType<SPPCell>();
+        cells = FindObjectsOfType<SPPCell>();
 
-        var otherCellPositions =
-            new NativeArray<Vector3>(cells.Length, Allocator.TempJob, NativeArrayOptions.ClearMemory);
+        var otherCellPositions = new NativeArray<Vector3>(cells.Length, Allocator.TempJob, NativeArrayOptions.ClearMemory);
         int cellArrayIndex = 0;
 
         foreach (var cell in cells)
@@ -121,43 +140,45 @@ public class SPPFieldManager : MonoBehaviour
 
         foreach (var cell in cells)
         {
-            var cellTransform = cell.ThisTransform;
-            var position = cellTransform.position;
+         
+                var cellTransform = cell.ThisTransform;
+                var position = cellTransform.position;
 
-            NeighborJob data = new NeighborJob(position, otherCellPositions, FixedRotation,
-                perNeighborRotation, neighborhoodRadius);
+                NeighborJob data = new NeighborJob(position, otherCellPositions, FixedRotation,
+                    perNeighborRotation, neighborhoodRadius);
 
-            JobHandle handle = data.Schedule();
+                JobHandle handle = data.Schedule();
 
-            handle.Complete();
-
-
-            float neighborCount = data.resultInfo[0];
-            float deltaRotation = data.resultInfo[1];
+                handle.Complete();
 
 
-            data.Dispose();
+                float neighborCount = data.resultInfo[0];
+                float deltaRotation = data.resultInfo[1];
 
-            // effecting changes
-            // rotating
-            cellTransform.Rotate(0, 0, deltaRotation);
 
-            var rotation = cellTransform.rotation;
+                data.Dispose();
 
-            cell.currentNumberOfNeighbors = (int)neighborCount;
+                // effecting changes
+                // rotating
+                cellTransform.Rotate(0, 0, deltaRotation);
 
-            cellTransform.SetPositionAndRotation(
-                position + new Vector3(Mathf.Cos(rotation.eulerAngles.z), Mathf.Sin(rotation.eulerAngles.z), 0) *
-                (Velocity * Time.deltaTime),
-                rotation);
+                var rotation = cellTransform.rotation;
 
-            // 'wrapping' position of cell to achieve toroidal space.
-            var wrappedPosition = wrapPositionToSpace(cellTransform.position);
+                cell.currentNumberOfNeighbors = (int) neighborCount;
 
-            cellTransform.SetPositionAndRotation(wrappedPosition, rotation);
-            // separate the neighbors into left and right
-            cell.Renderer.color = SetColor((int) neighborCount);
-            SetCellGrade((int)neighborCount,cell);
+                cellTransform.SetPositionAndRotation(
+                    position + new Vector3(Mathf.Cos(rotation.eulerAngles.z), Mathf.Sin(rotation.eulerAngles.z), 0) *
+                    (Velocity * Time.deltaTime),
+                    rotation);
+
+                // 'wrapping' position of cell to achieve toroidal space.
+                var wrappedPosition = wrapPositionToSpace(cellTransform.position);
+
+                cellTransform.SetPositionAndRotation(wrappedPosition, rotation);
+                // separate the neighbors into left and right
+                cell.Renderer.color = SetColor((int) neighborCount);
+                SetCellGrade((int) neighborCount, cell);
+            
         }
 
         otherCellPositions.Dispose();
@@ -215,7 +236,7 @@ public class SPPFieldManager : MonoBehaviour
         return position;
     }
 
-    public List<SPPCell> Cells
+    public SPPCell[] Cells
     {
         get => cells;
         set => cells = value;

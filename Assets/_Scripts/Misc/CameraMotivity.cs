@@ -31,38 +31,35 @@ public class CameraMotivity : MonoBehaviour
         }
 
         var current = Event.current;
-        
+
         if (current.isKey)
         {
             // if not follow camera, move camera on defined key strokes only
-           
-                if (current.keyCode == yPlusKey)
-                {
-                    _camera.transform.Translate(0f, cameraMoveSpeedY * Time.deltaTime, 0f);
-                }
+            if (current.keyCode == yPlusKey)
+            {
+                _camera.transform.Translate(0f, cameraMoveSpeedY * Time.deltaTime, 0f);
+            }
 
-                if (current.keyCode == yMinusKey)
-                {
-                    _camera.transform.Translate(0f, -cameraMoveSpeedY * Time.deltaTime, 0f);
-                }
+            if (current.keyCode == yMinusKey)
+            {
+                _camera.transform.Translate(0f, -cameraMoveSpeedY * Time.deltaTime, 0f);
+            }
 
-                if (current.keyCode == xPlusKey)
-                {
-                    _camera.transform.Translate(cameraMoveSpeedX * Time.deltaTime, 0f, 0f);
-                }
+            if (current.keyCode == xPlusKey)
+            {
+                _camera.transform.Translate(cameraMoveSpeedX * Time.deltaTime, 0f, 0f);
+            }
 
-                if (current.keyCode == xMinusKey)
-                {
-                    _camera.transform.Translate(-cameraMoveSpeedX * Time.deltaTime, 0f, 0f);
-                }
-             
+            if (current.keyCode == xMinusKey)
+            {
+                _camera.transform.Translate(-cameraMoveSpeedX * Time.deltaTime, 0f, 0f);
+            }
         } // checking if object to follow is null (we know followCamera is true);
         else if (followObject && followObject != null)
         {
             var folPos = followObject.transform.position;
             if (hardFollow)
             {
-                
                 // doing a hard follow
                 _camera.transform.SetPositionAndRotation(new Vector3(folPos.x, folPos.y, _camera.transform.position.z),
                     _camera.transform.rotation);
@@ -72,7 +69,7 @@ public class CameraMotivity : MonoBehaviour
                 folPos.z = _camera.transform.position.z;
 
                 Vector3 lerpedMove = Vector3.Lerp(_camera.transform.position, folPos, followSpeed * Time.deltaTime);
-                _camera.transform.SetPositionAndRotation(lerpedMove,Quaternion.identity);
+                _camera.transform.SetPositionAndRotation(lerpedMove, Quaternion.identity);
             }
         }
     }

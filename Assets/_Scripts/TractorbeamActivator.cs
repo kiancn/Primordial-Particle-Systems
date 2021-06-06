@@ -41,9 +41,7 @@ public class TractorbeamActivator : MonoBehaviour
         if (mouseDown && activationTime > timeMaxActivate && tractorBeam.activeInHierarchy)
         {
             currentTimeToNextActivate = timeBetweenActivates;
-
             tractorBeam.SetActive(false);
-            currentTimeToNextActivate = timeMaxActivate;
             return;
         }
 
