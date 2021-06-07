@@ -97,9 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2724668828aa049ada7b6c541b350f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  <Manager>k__BackingField: {fileID: 0}
   _renderer: {fileID: 0}
-  managerName: FieldManager A
+  currentNumberOfNeighbors: 0
+  ManagerName: FieldManager A
   <CellGrade>k__BackingField: 0
 --- !u!58 &3366827112720137778
 CircleCollider2D:

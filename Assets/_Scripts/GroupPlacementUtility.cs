@@ -15,11 +15,16 @@ public class GroupPlacementUtility : MonoBehaviour
     
     [SerializeField] private bool useAssistKey = true;
 
+    [SerializeField] private string spawnParentName = "Cell Parent";
+    private Transform spawnParentTransform;
+
     private bool hitUI = false;
     
     // Start is called before the first frame update
     void Start()
     {
+        spawnParentTransform = GameObject.Find(spawnParentName).transform;
+        
         thisTransform = gameObject.transform;
         _camera = FindObjectOfType<Camera>();
         prespawnedPrefab = Instantiate(prefab);
@@ -38,7 +43,7 @@ public class GroupPlacementUtility : MonoBehaviour
             foreach (var point in placementPoints)
             {
                 var newGo = Instantiate(prespawnedPrefab, new Vector3(point.position.x, point.position.y, 0),
-                    Quaternion.identity);
+                    Quaternion.identity,spawnParentTransform);
                 newGo.SetActive(true);
             }
         }

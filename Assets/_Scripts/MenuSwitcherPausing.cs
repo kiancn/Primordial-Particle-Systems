@@ -25,9 +25,11 @@ public class MenuSwitcherPausing : MonoBehaviour
         }
     }
 
+    [SerializeField] private bool pauseOnActivate = true;
+
     public void SwitchMenuState()
     {
-        if (!menuCanvasObject.activeInHierarchy)
+        if (!menuCanvasObject.activeInHierarchy && pauseOnActivate)  
         {
             if (scenepauser.pausedNow)
             {
@@ -42,8 +44,10 @@ public class MenuSwitcherPausing : MonoBehaviour
                 pausedBeforeMenuActivation = false;
                 menuCanvasObject.SetActive(true);
             }
+
+            return;
         }
-        else
+        else if(menuCanvasObject.activeInHierarchy && pauseOnActivate)
         {
             if (pausedBeforeMenuActivation)
             {
@@ -58,6 +62,45 @@ public class MenuSwitcherPausing : MonoBehaviour
             }
 
             pausedBeforeMenuActivation = scenepauser.pausedNow;
+            return;
+        }
+        
+        /* no pause on activate sections, annoyingly close to identical */
+        
+        if (!menuCanvasObject.activeInHierarchy)  
+        {
+            if (scenepauser.pausedNow)
+            {
+                pausedBeforeMenuActivation = true;
+                menuCanvasObject.SetActive(true);
+                scenepauser.externallyLocked = true;
+            }
+            else
+            {
+                // scenepauser.PauseSwitch();
+                // scenepauser.externallyLocked = true;
+                // pausedBeforeMenuActivation = false;
+                menuCanvasObject.SetActive(true);
+            }
+
+            return;
+        }
+        else if(menuCanvasObject.activeInHierarchy)
+        {
+            if (pausedBeforeMenuActivation)
+            {
+                // scenepauser.externallyLocked = false;
+                menuCanvasObject.SetActive(false);
+            }
+            else
+            {
+                menuCanvasObject.SetActive(false);
+                // scenepauser.externallyLocked = false;
+                // scenepauser.PauseSwitch();
+            }
+
+            pausedBeforeMenuActivation = scenepauser.pausedNow;
+            return;
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -384,7 +384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -86}
+  m_AnchoredPosition: {x: 0, y: -200.48}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &54946000
@@ -1153,7 +1153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -256}
+  m_AnchoredPosition: {x: 0, y: -234.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &557441046
@@ -1377,6 +1377,8 @@ MonoBehaviour:
   secondsBetweenSpawns: 0.5
   ownTransform: {fileID: 620224344}
   spawnNumberLimit: 200
+  timeBeforeFirstUpdate: 0.1
+  spawnParentName: Cell Parent
 --- !u!4 &620224344
 Transform:
   m_ObjectHideFlags: 0
@@ -1738,7 +1740,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -22}
-  m_SizeDelta: {x: 275.15, y: 386.2}
+  m_SizeDelta: {x: 275.15, y: 470.6254}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &837686120
 MonoBehaviour:
@@ -1761,11 +1763,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 2406121c9af10dc41ac99c456c0a9e4e, type: 3}
+    m_FontSize: 19
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -1774,7 +1776,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "The Editor is built to allow on-the-fly testing of all possible variable
-    settings of the Primodial Particle System described by Schmickl et al.\r\n\n\tI
+    settings of the Primodial Particle System described by Schmickl (2016).\r\n\n\tI
     encourage you to visit the resources provided in the info section.\nBut it is
     also pretty fun just to create a primordial particle soup and watch it play out
     - or fiddle around with the settings to find unique emerging circumstances.\n\n\tControls:\n\nYou
@@ -1897,6 +1899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cells: []
+  cellAmount: 0
   xMin: -8
   xMax: 8
   yMin: -14.5
@@ -1911,6 +1914,8 @@ MonoBehaviour:
   color10_15: {r: 0.56818783, g: 0.15619439, b: 0.735849, a: 0.7529412}
   color16_25: {r: 0.5754717, g: 0.035288375, b: 0.035288375, a: 0.7529412}
   color26_up: {r: 0.9490196, g: 0.26933178, b: 0.4339623, a: 0.7529412}
+  framesPerListUpdate: 10
+  cellParentName: Cell Parent
 --- !u!4 &1021687923
 Transform:
   m_ObjectHideFlags: 0
@@ -2411,7 +2416,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: efc9aa5383a475740bc6d0186f0b6aee, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -3303,8 +3308,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15.700012}
-  m_SizeDelta: {x: 304.73, y: 498.55}
+  m_AnchoredPosition: {x: 0, y: -13.159485}
+  m_SizeDelta: {x: 304.73, y: 498.7642}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1465336808
 MonoBehaviour:
@@ -3327,11 +3332,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 2406121c9af10dc41ac99c456c0a9e4e, type: 3}
+    m_FontSize: 19
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -3340,16 +3345,12 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "You play as biologist and brigadeer-general Snoop Dolphin on a mission
-    to gather valuable particle specimens.\nTo undertake the missing, he has let
-    himself be miniturized using cutting edge sci-fi technology.\n\nThe mission is
-    to 50 of each of the highest energy particles! \nWhile doing this you need to
-    keep yourself fed; make more bullets to be able to keep shooting, and gather
-    particles to keep your ships hull healthy\n\nYou can craft \r\n    \u2022 food
-    resource\r\n    \u2022 hull repairs\r\n    \u2022 bullets\r\nIt costs a combination
-    of particles to do so.\n\nYour mission is to collect\n50 each of particles D,
-    E, F\r\nand not die trying.\n\n\tControls: \n\nForward: D\nBack: S\nShoot: Left
-    Mouse Button\nTractor beam: Right Mouse Button \n\nPress 'C' to show crafting
-    info in-game."
+    to gather valuable particle specimens.\nTo undertake the missing, you have let
+    himself be miniturized using cutting edge sci-fi technology!\n\nYour mission
+    is to collect high energy particles! \n\nYou can craft:\r\n    \u2022 food resource\r\n   
+    \u2022 hull repairs\r\n    \u2022 bullets\r\nPress 'C' to show crafting info
+    in-game.\n\n\tControls: \n\nForward: D\nBack: S\nShoot: Left Mouse Button\nTractor
+    beam: Right Mouse Button "
 --- !u!222 &1465336809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3640,7 +3641,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: efc9aa5383a475740bc6d0186f0b6aee, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -3925,6 +3926,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982111622}
   m_CullTransparentMesh: 1
+--- !u!1 &2043822008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2043822009}
+  m_Layer: 0
+  m_Name: Cell Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2043822009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043822008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.523066, y: -8.167996, z: -5.5265102}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2067279596
 GameObject:
   m_ObjectHideFlags: 0

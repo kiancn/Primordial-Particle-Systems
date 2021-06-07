@@ -21,13 +21,25 @@ public class CameraMotivity : MonoBehaviour
 
     [SerializeField] private bool hardFollow = false;
 
+    [SerializeField] private float cameraZoomMinimum = 0.5f;
+    [SerializeField] private float cameraZoomMaximum = 10.5f;
+
 
     // Update is called once per frame
     void OnGUI()
     {
         if (Input.mouseScrollDelta != Vector2.zero)
         {
-            _camera.orthographicSize += Input.mouseScrollDelta.y > 0 ? -.1f : .1f;
+            bool zoomingIn = Input.mouseScrollDelta.y > 0;
+            if (!zoomingIn && _camera.orthographicSize < cameraZoomMaximum)
+            {
+                _camera.orthographicSize += .1f;
+            }
+            else if (zoomingIn && _camera.orthographicSize > cameraZoomMinimum)
+            {
+                _camera.orthographicSize -= .1f;
+            }
+
         }
 
         var current = Event.current;

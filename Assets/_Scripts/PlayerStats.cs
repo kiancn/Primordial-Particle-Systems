@@ -17,7 +17,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] public float foodDrainInterval = 4f;
     [SerializeField] private float currentTimeSinceLastFoodDrain;
 
-    [SerializeField] private int particlesForWin = 50;
+    [SerializeField] public int particlesForWinState0 = 50;
+    [SerializeField] public int particlesForWinState1 = 50;
+    [SerializeField] public int particlesForWinState2 = 50;
+    [SerializeField] public int particlesForWinState3 = 50;
+    [SerializeField] public int particlesForWinState4 = 50;
+    [SerializeField] public int particlesForWinState5 = 50;
 
     [SerializeField] private PlayerInventory _inventory;
 
@@ -48,9 +53,9 @@ public class PlayerStats : MonoBehaviour
         CurrentFood = baseFood;
         CurrentHullPoints = maxHullPoints;
         CurrentBullets = maxBullets / 2;
-
-        foodPointChangeEvent
-            .Invoke(baseFood); // these events will be the point text updates and possinbly some glamour 
+        
+        // these events will be the point text updates and possinbly some glamour 
+        foodPointChangeEvent.Invoke(baseFood); 
         hullPointChangeEvent.Invoke(maxHullPoints);
         bulletPointChangeEvent.Invoke(CurrentBullets);
 
@@ -72,7 +77,7 @@ public class PlayerStats : MonoBehaviour
         if (!gameDecided && CheckLosingConditions())
         {
             gameDecided = true;
-            Debug.Log("Player did of Hunger or hull damage.");
+            Debug.Log("Player died of hunger or hull damage.");
             onLoseGameEvent.Invoke();
         }
     }
@@ -109,11 +114,15 @@ public class PlayerStats : MonoBehaviour
     /* checks for win conditions and returns true, if the game is won*/
     private bool CheckWinCondition()
     {
-        bool particleDGoalReached = _inventory.state3Cells >= particlesForWin;
-        bool particleEGoalReached = _inventory.state4Cells >= particlesForWin;
-        bool particleFGoalReached = _inventory.state5Cells >= particlesForWin;
+        bool particleAGoalReached = _inventory.state0Cells >= particlesForWinState0;
+        bool particleBGoalReached = _inventory.state1Cells >= particlesForWinState1;
+        bool particleCGoalReached = _inventory.state2Cells >= particlesForWinState2;
+        bool particleDGoalReached = _inventory.state3Cells >= particlesForWinState3;
+        bool particleEGoalReached = _inventory.state4Cells >= particlesForWinState4;
+        bool particleFGoalReached = _inventory.state5Cells >= particlesForWinState5;
 
-        return particleDGoalReached && particleEGoalReached && particleFGoalReached;
+        return particleAGoalReached && particleBGoalReached && particleCGoalReached && 
+            particleDGoalReached && particleEGoalReached && particleFGoalReached;
     }
 
     /* checks for losing conditions and returns true, if the game is lost*/

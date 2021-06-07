@@ -22,9 +22,12 @@ public class SpawnWithinDiameter : MonoBehaviour
     [SerializeField] private float timeBeforeFirstUpdate = 0.1f;
     private float currentSceneRunTime;
 
+    [SerializeField] private string spawnParentName = "Cell Parent";
+    private GameObject spawnParent;
 
     void OnEnable()
     {
+        spawnParent = GameObject.Find(spawnParentName);
         currentSceneRunTime = 0f;
         spawnNumberCurrent = 0;
         
@@ -58,7 +61,7 @@ public class SpawnWithinDiameter : MonoBehaviour
                 var circRandPos = Random.insideUnitCircle * (radius * Random.value);
                 var newObject = Instantiate(thingToPlace,
                     new Vector3(circRandPos.x + ownTransform.position.x, circRandPos.y + ownTransform.position.y, 0),
-                    Quaternion.identity);
+                    Quaternion.identity,spawnParent.transform);
                 newObject.SetActive(true);
                 secondsSinceLastSpawn = 0f;
 

@@ -16,7 +16,7 @@ public class SPPCell : MonoBehaviour
 
     public int currentNumberOfNeighbors = 0;
 
-    [SerializeField] private String managerName;
+    [SerializeField] public string ManagerName;
 
     [field: SerializeField] public int CellGrade { get; set; }
 
@@ -28,7 +28,7 @@ public class SPPCell : MonoBehaviour
     {
          // _manager = Object.FindObjectOfType<SPPFieldManager>();
 
-        GameObject managerCarrier = GameObject.Find(managerName);
+        GameObject managerCarrier = GameObject.Find(ManagerName);
         if (managerCarrier != null)
         {
             SPPFieldManager manager = managerCarrier.GetComponent<SPPFieldManager>();
@@ -67,15 +67,14 @@ public class SPPCell : MonoBehaviour
 
     private void OnDisable()
     {
-     //   if (Manager != null)
-        {
-       //     Manager.Cells = Array.FindAll(Manager.Cells, (x) => { return this != x; }).ToArray();
-                //Manager.Cells.Remove(this);
-        }
+      // if (Manager != null)
+      //   {
+      //       Manager.Cells.Remove(this);
+      //   }
     }
 
     private void OnDestroy()
     {
-     //   OnDisable();
+     // OnDisable();
     }
 }

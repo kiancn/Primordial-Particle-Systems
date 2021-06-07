@@ -101,7 +101,7 @@ MonoBehaviour:
   <Manager>k__BackingField: {fileID: 0}
   _renderer: {fileID: 0}
   currentNumberOfNeighbors: 0
-  managerName: FieldManager B
+  ManagerName: FieldManager B
   <CellGrade>k__BackingField: 0
 --- !u!58 &3366827112720137778
 CircleCollider2D:
