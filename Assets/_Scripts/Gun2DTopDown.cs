@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class Gun2DTopDown : MonoBehaviour
 {
-
     [SerializeField] private PlayerStats playerStats;
-    
+
     [SerializeField] private Transform gunMuzzle;
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject bulletInstance;
     [Range(0f, 2f)] [SerializeField] private float bulletFireInterval = 0.2f;
 
     [SerializeField] private Player2DMoverTopdown playerMover;
-    
+
+    public static bool ShootingAllowed { get; set; } = true;
+
     private float timeSinceLastFire = 0f;
 
     private void Start()
@@ -43,7 +44,7 @@ public class Gun2DTopDown : MonoBehaviour
         timeSinceLastFire += Time.deltaTime;
 
         // player can fire while game is not paused, after interval - and by pressing left mouse button.
-        if (Time.timeScale > 0f && timeSinceLastFire > bulletFireInterval && Input.GetMouseButtonDown(0))
+        if (ShootingAllowed && Time.timeScale > 0f && timeSinceLastFire > bulletFireInterval && Input.GetMouseButtonDown(0))
         {
             if (playerStats.CurrentBullets > 1)
             {
@@ -53,17 +54,17 @@ public class Gun2DTopDown : MonoBehaviour
             {
                 return;
             }
-            
+
             // Debug.Log("Bam, gun was ordered to spawn bullet.");
             var newBullet = Instantiate(bulletInstance, gunMuzzle.position, gunMuzzle.rotation);
 
             newBullet.SetActive(true);
-            
+
             // ensure that bullet speed is relative to player ship
             var bulletObj = newBullet.GetComponent<Bullet2DTopDown>();
             if (bulletObj != null)
             {
-                bulletObj.Speed = 2*bulletObj.Speed + playerMover.CurrentMoveSpeed;
+                bulletObj.Speed = bulletObj.Speed + playerMover.CurrentMoveSpeed;
             }
 
             timeSinceLastFire = 0f;

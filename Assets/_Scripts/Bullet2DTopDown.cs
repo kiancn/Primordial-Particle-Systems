@@ -16,6 +16,8 @@ public class Bullet2DTopDown : MonoBehaviour
     [SerializeField] private Rigidbody2D body;
     
     [SerializeField] private Player2DMoverTopdown playerMover;
+    
+    
 
     private float timeSinceEnable = 0f;
 
@@ -47,8 +49,7 @@ public class Bullet2DTopDown : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         var dT = Time.deltaTime;
 

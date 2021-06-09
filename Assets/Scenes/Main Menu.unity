@@ -1374,7 +1374,7 @@ MonoBehaviour:
   thingToPlace: {fileID: 3366827112720137790, guid: fa8a3599c576f554e80e8978ee97419b, type: 3}
   radius: 6
   randomWithinDiameter: 1
-  secondsBetweenSpawns: 0.5
+  secondsBetweenSpawns: 0.1
   ownTransform: {fileID: 620224344}
   spawnNumberLimit: 200
   timeBeforeFirstUpdate: 0.1
@@ -1906,7 +1906,7 @@ MonoBehaviour:
   yMax: 14.5
   velocity: 1
   neighborhoodRadius: 1
-  fixedRotation: 180
+  fixedRotation: 96
   perNeighborRotation: 17
   colorFree: {r: 0.8773585, g: 0.8483891, b: 0.8483891, a: 0.7529412}
   color3_5: {r: 0.43965825, g: 0.7154385, b: 0.9811321, a: 0.7529412}
@@ -2189,6 +2189,8 @@ MonoBehaviour:
   followSpeed: 3
   followObject: {fileID: 0}
   hardFollow: 0
+  cameraZoomMinimum: 0.5
+  cameraZoomMaximum: 10.5
 --- !u!1 &1117377691
 GameObject:
   m_ObjectHideFlags: 0

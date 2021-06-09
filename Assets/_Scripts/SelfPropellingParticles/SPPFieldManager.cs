@@ -105,7 +105,7 @@ public class SPPFieldManager : MonoBehaviour
             }
 
             deltaRotation = fixedCellRotation +
-                perNeighborRotation * numberOfNeighbors * Mathf.Sign(neighborCoefficient) - 1;
+                perNeighborRotation * numberOfNeighbors * Mathf.Sign(neighborCoefficient);
 
             resultInfo[0] = numberOfNeighbors - 1;
             resultInfo[1] = deltaRotation;

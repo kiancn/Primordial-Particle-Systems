@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c20d72da2e9c0dd40a25c8ad68904772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 12
+  <Speed>k__BackingField: 9
   bulletTransform: {fileID: 3018388312492411645}
   impactObject: {fileID: 4365197412384637221, guid: c23737318753483428b3bc67a0cb8223, type: 3}
   timeToLive: 2.1

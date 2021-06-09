@@ -73,34 +73,26 @@ public class MenuSwitcherPausing : MonoBehaviour
             {
                 pausedBeforeMenuActivation = true;
                 menuCanvasObject.SetActive(true);
-                scenepauser.externallyLocked = true;
             }
             else
             {
-                // scenepauser.PauseSwitch();
-                // scenepauser.externallyLocked = true;
-                // pausedBeforeMenuActivation = false;
                 menuCanvasObject.SetActive(true);
             }
 
-            return;
         }
         else if(menuCanvasObject.activeInHierarchy)
         {
             if (pausedBeforeMenuActivation)
             {
-                // scenepauser.externallyLocked = false;
                 menuCanvasObject.SetActive(false);
             }
             else
             {
                 menuCanvasObject.SetActive(false);
-                // scenepauser.externallyLocked = false;
-                // scenepauser.PauseSwitch();
             }
 
             pausedBeforeMenuActivation = scenepauser.pausedNow;
-            return;
+
         }
     }
 }
