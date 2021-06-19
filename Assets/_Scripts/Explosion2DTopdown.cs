@@ -25,13 +25,11 @@ public class Explosion2DTopdown : MonoBehaviour
 
         if (timeSinceEnable > timeToLive)
         {
-            // TODO Hardcoded bastard code
-            if (timeSinceEnable > 0.25f)
-            {
-                gameObject.GetComponent<Collider2D>().enabled = false;
-            }
-            
+            gameObject.GetComponent<Collider2D>().enabled = false;
+
+            // Debug.Log(gameObject.name + " is being destroyed.");
             Destroy(explosionObject);
+            
         }
     }
 }

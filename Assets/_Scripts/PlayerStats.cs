@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/* Handles stats and damage, fires events on stats change. This class is a prototype mishmash*/
+/* Handles stats and damage, fires events on stats change.
+ Crucially, it handles win and lose conditions. 
+ This class is a prototype mishmash. */
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField] private int baseFood = 255;
@@ -14,8 +16,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int maxBullets = 120;
     [field: SerializeField] public int CurrentBullets { get; private set; }
 
+    [field: SerializeField] public int PlayerLevel { get; private set; } = 0;
+
     [SerializeField] public float foodDrainInterval = 4f;
-    [SerializeField] private float currentTimeSinceLastFoodDrain;
+    [field: SerializeField] public float CurrentTimeSinceLastFoodDrain { get; set; }
 
     [SerializeField] public int particlesForWinState0 = 50;
     [SerializeField] public int particlesForWinState1 = 50;
@@ -26,22 +30,23 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] private PlayerInventory _inventory;
 
-    [SerializeField] private UnityEvent onLoseGameEvent;
-    [SerializeField] private UnityEvent onWinGameEvent;
+    [SerializeField] public UnityEvent OnLoseGameEvent;
+    [field: SerializeField] public UnityEvent OnWinGameEvent;
 
     [SerializeField] private UnityEvent<int> onCollisionEvent;
 
-    /* events to a on point changes; the ui prefabs  */
+    /* events point to resource-point changes; the ui prefabs  */
     [SerializeField] private UnityEvent<int> foodPointChangeEvent;
     [SerializeField] private UnityEvent<int> bulletPointChangeEvent;
     [SerializeField] private UnityEvent<int> hullPointChangeEvent;
+    [SerializeField] private UnityEvent<int> levelChangeChangeEvent;
 
     [SerializeField] private float currentGameTime;
 
     [SerializeField] private GameObject onDestructiveHullContactPrefab;
     [SerializeField] private GameObject onDestructiveHullContactPreSpawn;
 
-    private bool gameDecided = false;
+    public bool  GameDecided { get; set; } = false;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -53,42 +58,24 @@ public class PlayerStats : MonoBehaviour
         CurrentFood = baseFood;
         CurrentHullPoints = maxHullPoints;
         CurrentBullets = maxBullets / 2;
-        
+
         // these events will be the point text updates and possinbly some glamour 
-        foodPointChangeEvent.Invoke(baseFood); 
+        foodPointChangeEvent.Invoke(baseFood);
         hullPointChangeEvent.Invoke(maxHullPoints);
         bulletPointChangeEvent.Invoke(CurrentBullets);
+        levelChangeChangeEvent.Invoke(PlayerLevel);
 
         currentGameTime = 0f;
-        gameDecided = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!gameDecided && CheckWinCondition())
-        {
-            gameDecided = true;
-            Debug.Log("Player Won!");
-            onWinGameEvent.Invoke();
-            return;
-        }
-
-        if (!gameDecided && CheckLosingConditions())
-        {
-            gameDecided = true;
-            Debug.Log("Player died of hunger or hull damage.");
-            onLoseGameEvent.Invoke();
-        }
+        GameDecided = false;
     }
 
     private void FixedUpdate()
     {
-        currentTimeSinceLastFoodDrain += Time.deltaTime;
-        if (currentTimeSinceLastFoodDrain > foodDrainInterval)
+        CurrentTimeSinceLastFoodDrain += Time.deltaTime;
+        if (CurrentTimeSinceLastFoodDrain > foodDrainInterval)
         {
             FoodPointChange(-1);
-            currentTimeSinceLastFoodDrain = 0f;
+            CurrentTimeSinceLastFoodDrain = 0f;
         }
 
         currentGameTime += Time.deltaTime;
@@ -105,35 +92,11 @@ public class PlayerStats : MonoBehaviour
 
         foreach (var point in contactPoints)
         {
-           var impactObject = Instantiate(onDestructiveHullContactPreSpawn, point.point, Quaternion.identity);
-           impactObject.SetActive(true);
-            
+            var impactObject = Instantiate(onDestructiveHullContactPreSpawn, point.point, Quaternion.identity);
+            impactObject.SetActive(true);
         }
     }
 
-    /* checks for win conditions and returns true, if the game is won*/
-    private bool CheckWinCondition()
-    {
-        bool particleAGoalReached = _inventory.state0Cells >= particlesForWinState0;
-        bool particleBGoalReached = _inventory.state1Cells >= particlesForWinState1;
-        bool particleCGoalReached = _inventory.state2Cells >= particlesForWinState2;
-        bool particleDGoalReached = _inventory.state3Cells >= particlesForWinState3;
-        bool particleEGoalReached = _inventory.state4Cells >= particlesForWinState4;
-        bool particleFGoalReached = _inventory.state5Cells >= particlesForWinState5;
-
-        return particleAGoalReached && particleBGoalReached && particleCGoalReached && 
-            particleDGoalReached && particleEGoalReached && particleFGoalReached;
-    }
-
-    /* checks for losing conditions and returns true, if the game is lost*/
-    private bool CheckLosingConditions()
-    {
-        bool shipWrecked = CurrentHullPoints <= 0;
-        bool playerDiedOfHunger = CurrentFood <= 0;
-
-
-        return shipWrecked || playerDiedOfHunger;
-    }
 
     public void FoodPointChange(int change)
     {
@@ -151,5 +114,11 @@ public class PlayerStats : MonoBehaviour
     {
         CurrentBullets += change;
         bulletPointChangeEvent.Invoke(CurrentBullets);
+    }
+
+    public void PlayerLevelChangeEvent(int change)
+    {
+        PlayerLevel += change;
+        levelChangeChangeEvent.Invoke(PlayerLevel);
     }
 }

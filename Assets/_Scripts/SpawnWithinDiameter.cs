@@ -30,7 +30,7 @@ public class SpawnWithinDiameter : MonoBehaviour
         spawnParent = GameObject.Find(spawnParentName);
         currentSceneRunTime = 0f;
         spawnNumberCurrent = 0;
-        
+
         if (thingToPlace == null)
         {
             Debug.LogWarning(
@@ -53,16 +53,34 @@ public class SpawnWithinDiameter : MonoBehaviour
         currentSceneRunTime += Time.deltaTime;
         if (currentSceneRunTime > timeBeforeFirstUpdate)
         {
-
             secondsSinceLastSpawn = secondsSinceLastSpawn + Time.deltaTime;
 
+            GameObject newObject;
+            
             if (secondsSinceLastSpawn > secondsBetweenSpawns && spawnNumberCurrent < spawnNumberLimit)
             {
                 var circRandPos = Random.insideUnitCircle * (radius * Random.value);
-                var newObject = Instantiate(thingToPlace,
-                    new Vector3(circRandPos.x + ownTransform.position.x, circRandPos.y + ownTransform.position.y, 0),
-                    Quaternion.identity,spawnParent.transform);
-                newObject.SetActive(true);
+                if (spawnParent != null)
+                {
+                    newObject = Instantiate(thingToPlace,
+                        new Vector3(circRandPos.x + ownTransform.position.x, circRandPos.y + ownTransform.position.y,
+                            0),
+                        Quaternion.identity, spawnParent.transform);
+                    newObject.name = thingToPlace.name + spawnNumberCurrent;
+                    newObject.SetActive(true);
+                }
+                else
+                {
+                    newObject = Instantiate(thingToPlace,
+                        new Vector3(circRandPos.x + ownTransform.position.x, circRandPos.y + ownTransform.position.y,
+                            0),
+                        Quaternion.identity);
+                    newObject.SetActive(true);
+                    newObject.name = thingToPlace.name + spawnNumberCurrent;
+                }
+        
+                // Debug.Log($"Spawned {newObject.name}");
+
                 secondsSinceLastSpawn = 0f;
 
                 spawnNumberCurrent++;

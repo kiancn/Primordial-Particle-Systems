@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /* Switches canvas on and off, and handles pausing intelligently */
 public class MenuSwitcherPausing : MonoBehaviour
@@ -14,6 +15,9 @@ public class MenuSwitcherPausing : MonoBehaviour
     [SerializeField] private GameObject menuCanvasObject;
 
     [SerializeField] private bool pausedBeforeMenuActivation;
+
+    [SerializeField] private UnityEvent onEventActivate;
+    [SerializeField] private UnityEvent onEventDeactivate;
 
     // Update is called once per frame
     void Update()
@@ -44,7 +48,7 @@ public class MenuSwitcherPausing : MonoBehaviour
                 pausedBeforeMenuActivation = false;
                 menuCanvasObject.SetActive(true);
             }
-
+            onEventActivate.Invoke();
             return;
         }
         else if(menuCanvasObject.activeInHierarchy && pauseOnActivate)
@@ -60,7 +64,7 @@ public class MenuSwitcherPausing : MonoBehaviour
                 scenepauser.externallyLocked = false;
                 scenepauser.PauseSwitch();
             }
-
+            onEventDeactivate.Invoke();
             pausedBeforeMenuActivation = scenepauser.pausedNow;
             return;
         }
@@ -78,7 +82,7 @@ public class MenuSwitcherPausing : MonoBehaviour
             {
                 menuCanvasObject.SetActive(true);
             }
-
+            onEventActivate.Invoke();
         }
         else if(menuCanvasObject.activeInHierarchy)
         {
@@ -90,9 +94,11 @@ public class MenuSwitcherPausing : MonoBehaviour
             {
                 menuCanvasObject.SetActive(false);
             }
-
+            
             pausedBeforeMenuActivation = scenepauser.pausedNow;
 
+            onEventDeactivate.Invoke();            
+            
         }
     }
 }

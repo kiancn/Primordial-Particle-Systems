@@ -19,19 +19,13 @@ public class LevelGoalInfoUpdater : MonoBehaviour
     private int updatesSinceTextRefresh;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         updatesSinceTextRefresh++;
         if (updatesSinceTextRefresh >= updatesBetweenTextRefresh)
         {
             updatesSinceTextRefresh = 0;
-            //
-            // particleATexts.textHave.text = inventory.state0Cells.ToString();
-            // particleATexts.textGoal.text = stats.particlesForWinState0.ToString();
-            // int needed = stats.particlesForWinState0 - inventory.state0Cells;
-            // particleATexts.textNeed.text = needed.ToString();
-            // particleATexts.successObject.SetActive(needed <= 0);
-            //
+
             updateText(particleATexts,inventory.state0Cells,stats.particlesForWinState0);
             updateText(particleBTexts,inventory.state1Cells,stats.particlesForWinState1);
             updateText(particleCTexts,inventory.state2Cells,stats.particlesForWinState2);

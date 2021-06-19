@@ -18,8 +18,8 @@ public class GroupPlacementUtility : MonoBehaviour
     [SerializeField] private string spawnParentName = "Cell Parent";
     private Transform spawnParentTransform;
 
-    private bool hitUI = false;
-    
+    public static bool PlacementAllowed { get; set; } = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +38,7 @@ public class GroupPlacementUtility : MonoBehaviour
 
         thisTransform.position = mousePos[0];
 
-        if (!useAssistKey && Input.GetMouseButtonDown(0)  || useAssistKey && Input.GetKey(assistKey) && Input.GetMouseButtonDown(0))
+        if ((!useAssistKey && Input.GetMouseButtonDown(0)  || useAssistKey && Input.GetKey(assistKey) && Input.GetMouseButtonDown(0)&&PlacementAllowed))
         {
             foreach (var point in placementPoints)
             {

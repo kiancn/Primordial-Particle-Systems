@@ -48,33 +48,14 @@ public class SPPCell : MonoBehaviour
             Destroy(this);
         }
 
+
+
         _renderer = GetComponent<SpriteRenderer>();
         thisCollider = GetComponent<Collider2D>();
         thisTransform = transform;
 
-        // if (Manager != null)
-        // {
-        //     SPPCell[] newCells = new SPPCell[Manager.Cells.Length+1];
-        //     
-        //     Manager.Cells.CopyTo(newCells,0);
-        //     newCells[newCells.Length-1] = this;
-        //
-        //     Manager.Cells = newCells;
-        //     
-        //     //Manager.Cells.Add(this);
-        // }
+
     }
 
-    private void OnDisable()
-    {
-      // if (Manager != null)
-      //   {
-      //       Manager.Cells.Remove(this);
-      //   }
-    }
 
-    private void OnDestroy()
-    {
-     // OnDisable();
-    }
 }

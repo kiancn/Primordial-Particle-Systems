@@ -40,16 +40,12 @@ public class SPPFieldManager : MonoBehaviour
     private void Awake()
     {
         cellParent = GameObject.Find(cellParentName);
-        
+
         cells = new SPPCell[0];
 
         managerName = gameObject.name;
 
         cells = cellParent.GetComponentsInChildren<SPPCell>();
-        // Application.SetStackTraceLogType(LogType.Log, StackTraceLogType.Full);
-        // Application.SetStackTraceLogType(LogType.Warning, StackTraceLogType.Full);
-        // Application.SetStackTraceLogType(LogType.Error, StackTraceLogType.Full);
-        // Application.SetStackTraceLogType(LogType.Exception, StackTraceLogType.Full);
     }
 
 
@@ -91,8 +87,11 @@ public class SPPFieldManager : MonoBehaviour
         {
             for (int i = 0; i < cellPositions.Length; i++)
             {
-                if(cellPosition==cellPositions[i]){continue;}
-                
+                if (cellPosition == cellPositions[i])
+                {
+                    continue;
+                }
+
                 var otherCellX = cellPositions[i].x;
 
                 var diffX = otherCellX - cellPosition.x;
@@ -105,7 +104,7 @@ public class SPPFieldManager : MonoBehaviour
             }
 
             deltaRotation = fixedCellRotation +
-                perNeighborRotation * numberOfNeighbors * Mathf.Sign(neighborCoefficient);
+                            perNeighborRotation * numberOfNeighbors * Mathf.Sign(neighborCoefficient);
 
             resultInfo[0] = numberOfNeighbors - 1;
             resultInfo[1] = deltaRotation;
@@ -123,17 +122,16 @@ public class SPPFieldManager : MonoBehaviour
 
     private string managerName;
 
+    
     private void LateUpdate()
     {
         cells = cellParent.GetComponentsInChildren<SPPCell>();
-        // cells = FindObjectsOfType<SPPCell>();
-    }
+            // cells = FindObjectsOfType<SPPCell>();
+      }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-       
-
         var otherCellPositions =
             new NativeArray<Vector3>(cells.Length, Allocator.TempJob, NativeArrayOptions.ClearMemory);
         int cellArrayIndex = 0;
@@ -178,7 +176,8 @@ public class SPPFieldManager : MonoBehaviour
             cell.currentNumberOfNeighbors = (int) neighborCount;
 
             cellTransform.SetPositionAndRotation(
-                position + new Vector3(Mathf.Cos(rotation.eulerAngles.z), Mathf.Sin(rotation.eulerAngles.z), 0) * (Velocity * Time.deltaTime),
+                position + new Vector3(Mathf.Cos(rotation.eulerAngles.z), Mathf.Sin(rotation.eulerAngles.z), 0) *
+                (Velocity * Time.deltaTime),
                 rotation);
 
             // 'wrapping' position of cell to achieve toroidal space.

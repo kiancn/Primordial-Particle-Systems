@@ -9,5 +9,4 @@ public class LevelGoalUIPanelTextHolder : MonoBehaviour
     [SerializeField] public Text textHave; 
     [SerializeField] public Text textNeed;
     [SerializeField] public GameObject successObject;
-    
 }

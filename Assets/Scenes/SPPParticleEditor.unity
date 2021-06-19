@@ -7399,6 +7399,7 @@ GameObject:
   - component: {fileID: 259104239}
   - component: {fileID: 259104241}
   - component: {fileID: 259104240}
+  - component: {fileID: 259104242}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -7469,6 +7470,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259104238}
   m_CullTransparentMesh: 1
+--- !u!114 &259104242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259104238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f60b458692f2e42b8a417b4d3b1e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMouseEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1042679892}
+        m_TargetAssemblyTypeName: GroupPlacementUtility, Assembly-CSharp
+        m_MethodName: set_PlacementAllowed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onMouseExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1042679892}
+        m_TargetAssemblyTypeName: GroupPlacementUtility, Assembly-CSharp
+        m_MethodName: set_PlacementAllowed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!4 &259235225 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3366827112720137789, guid: 7ff93516c97d62049bc828c37828427c, type: 3}
@@ -18033,6 +18076,13 @@ MonoBehaviour:
   scenepauser: {fileID: 1948373851}
   menuCanvasObject: {fileID: 686149689}
   pausedBeforeMenuActivation: 0
+  onEventActivate:
+    m_PersistentCalls:
+      m_Calls: []
+  onEventDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
+  pauseOnActivate: 1
 --- !u!1001 &675915133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24608,6 +24658,8 @@ MonoBehaviour:
   followSpeed: 3
   followObject: {fileID: 0}
   hardFollow: 0
+  cameraZoomMinimum: 0.5
+  cameraZoomMaximum: 10.5
 --- !u!4 &873946164
 Transform:
   m_ObjectHideFlags: 0

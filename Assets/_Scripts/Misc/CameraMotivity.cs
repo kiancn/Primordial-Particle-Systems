@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CameraMotivity : MonoBehaviour
@@ -33,17 +34,20 @@ public class CameraMotivity : MonoBehaviour
             bool zoomingIn = Input.mouseScrollDelta.y > 0;
             if (!zoomingIn && _camera.orthographicSize < cameraZoomMaximum)
             {
-                _camera.orthographicSize += .1f;
+                // _camera.orthographicSize += .1f;
+                _camera.orthographicSize = math.lerp(_camera.orthographicSize, cameraZoomMaximum, .016f);
             }
             else if (zoomingIn && _camera.orthographicSize > cameraZoomMinimum)
             {
-                _camera.orthographicSize -= .1f;
+                // _camera.orthographicSize -= .1f;
+                _camera.orthographicSize = math.lerp(_camera.orthographicSize, cameraZoomMinimum, 0.016f);
             }
 
         }
 
         var current = Event.current;
 
+        // checking 
         if (current.isKey)
         {
             // if not follow camera, move camera on defined key strokes only
