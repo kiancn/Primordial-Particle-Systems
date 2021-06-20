@@ -7,6 +7,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Object = System.Object;
 
 public class SPPFieldManager : MonoBehaviour
 {
@@ -87,10 +88,7 @@ public class SPPFieldManager : MonoBehaviour
         {
             for (int i = 0; i < cellPositions.Length; i++)
             {
-                if (cellPosition == cellPositions[i])
-                {
-                    continue;
-                }
+                if (cellPosition == cellPositions[i]) { continue; }
 
                 var otherCellX = cellPositions[i].x;
 
@@ -122,12 +120,12 @@ public class SPPFieldManager : MonoBehaviour
 
     private string managerName;
 
-    
+
     private void LateUpdate()
     {
         cells = cellParent.GetComponentsInChildren<SPPCell>();
-            // cells = FindObjectsOfType<SPPCell>();
-      }
+        // cells = FindObjectsOfType<SPPCell>();
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -138,6 +136,8 @@ public class SPPFieldManager : MonoBehaviour
 
         foreach (var cell in cells)
         {
+            if (cell == null) { continue; }
+
             otherCellPositions[cellArrayIndex] = cell.ThisTransform.position;
             cellArrayIndex++;
         }
@@ -145,10 +145,9 @@ public class SPPFieldManager : MonoBehaviour
 
         foreach (var cell in cells)
         {
-            if (cell.ManagerName != managerName)
-            {
-                continue;
-            }
+            if (cell == null) { continue; }
+
+            if (cell.ManagerName != managerName) { continue; }
 
             var cellTransform = cell.ThisTransform;
             var position = cellTransform.position;
@@ -184,6 +183,7 @@ public class SPPFieldManager : MonoBehaviour
             var wrappedPosition = wrapPositionToSpace(cellTransform.position);
 
             cellTransform.SetPositionAndRotation(wrappedPosition, rotation);
+            
             // separate the neighbors into left and right
             cell.Renderer.color = SetColor((int) neighborCount);
             SetCellGrade((int) neighborCount, cell);
@@ -197,12 +197,18 @@ public class SPPFieldManager : MonoBehaviour
         int colorNumber = (int) Mathf.RoundToInt(numberOfNeighbors / 5);
         switch (colorNumber)
         {
-            case 0: return colorFree;
-            case 1: return color3_5;
-            case 2: return color6_9;
-            case 3: return color10_15;
-            case 4: return color16_25;
-            default: return color26_up;
+            case 0:
+                return colorFree;
+            case 1:
+                return color3_5;
+            case 2:
+                return color6_9;
+            case 3:
+                return color10_15;
+            case 4:
+                return color16_25;
+            default:
+                return color26_up;
         }
     }
 

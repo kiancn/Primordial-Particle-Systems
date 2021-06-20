@@ -43,17 +43,14 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] private float currentGameTime;
 
-    [SerializeField] private GameObject onDestructiveHullContactPrefab;
-    [SerializeField] private GameObject onDestructiveHullContactPreSpawn;
+    // [SerializeField] private GameObject onDestructiveHullContactPrefab;
+    // [SerializeField] private GameObject onDestructiveHullContactPreSpawn;
 
     public bool  GameDecided { get; set; } = false;
 
     // Start is called before the first frame update
     void OnEnable()
     {
-        onDestructiveHullContactPreSpawn = Instantiate(onDestructiveHullContactPrefab,
-            new Vector3(-100, -100, 0), Quaternion.identity);
-        onDestructiveHullContactPreSpawn.SetActive(false);
 
         CurrentFood = baseFood;
         CurrentHullPoints = maxHullPoints;
@@ -81,24 +78,7 @@ public class PlayerStats : MonoBehaviour
         currentGameTime += Time.deltaTime;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        CurrentHullPoints--;
-        onCollisionEvent.Invoke(CurrentHullPoints);
-
-        ContactPoint2D[] contactPoints = new ContactPoint2D[10];
-
-        other.GetContacts(contactPoints);
-
-        foreach (var point in contactPoints)
-        {
-            var impactObject = Instantiate(onDestructiveHullContactPreSpawn, point.point, Quaternion.identity);
-            impactObject.SetActive(true);
-        }
-    }
-
-
-    public void FoodPointChange(int change)
+   public void FoodPointChange(int change)
     {
         CurrentFood += change;
         foodPointChangeEvent.Invoke(CurrentFood);
