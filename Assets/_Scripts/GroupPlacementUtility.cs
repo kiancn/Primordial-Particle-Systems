@@ -37,15 +37,19 @@ public class GroupPlacementUtility : MonoBehaviour
         var mousePos = GetMousePositionAndNormal();
 
         thisTransform.position = mousePos[0];
-
-        if ((!useAssistKey && Input.GetMouseButtonDown(0)  || useAssistKey && Input.GetKey(assistKey) && Input.GetMouseButtonDown(0)&&PlacementAllowed))
+        
+        if (PlacementAllowed)
         {
-            foreach (var point in placementPoints)
+            if (!useAssistKey && Input.GetMouseButtonDown(0) || useAssistKey && Input.GetKey(assistKey) && Input.GetMouseButtonDown(0))
             {
-                var newGo = Instantiate(prespawnedPrefab, new Vector3(point.position.x, point.position.y, 0),
-                    Quaternion.identity,spawnParentTransform);
-                newGo.SetActive(true);
+                foreach (var point in placementPoints)
+                {
+                    var newGo = Instantiate(prespawnedPrefab, new Vector3(point.position.x, point.position.y, 0),
+                        Quaternion.identity, spawnParentTransform);
+                    newGo.SetActive(true);
+                }
             }
+
         }
     }
 

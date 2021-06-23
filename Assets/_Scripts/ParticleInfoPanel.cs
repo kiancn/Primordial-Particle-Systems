@@ -37,8 +37,8 @@ public void ShowParticleInfoPanel(SPPCell cell)
             panel.SetActive(true);
             baseRotationText.text = manager.FixedRotation.ToString();
             perNeighborRotationText.text = manager.PerNeighborRotation.ToString();
-            neighborhoodRadiusText.text = $"{manager.NeighborhoodRadius}";
-            velocityText.text = $"{manager.Velocity}";
+            neighborhoodRadiusText.text = $"{manager.NeighborhoodRadius.ToString()}";
+            velocityText.text = $"{manager.Velocity.ToString()}";
             currentNeighborsText.text = cell.currentNumberOfNeighbors.ToString();
             particleStateText.text = ((char) (65 + cell.CellGrade)).ToString();
         }
@@ -48,6 +48,4 @@ public void ShowParticleInfoPanel(SPPCell cell)
     {
         panel.SetActive(false);
     }
-
-    
 }

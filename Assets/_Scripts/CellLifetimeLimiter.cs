@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(SPPCell))]
 public class CellLifetimeLimiter : MonoBehaviour
 {
-
     [SerializeField] private float secondsToLive = 100f;
     [SerializeField] private float randomLifeModificationMax = 20f;
 
@@ -32,7 +31,6 @@ public class CellLifetimeLimiter : MonoBehaviour
             onCellDeathPrefab.transform.position = cell.transform.position;
             onCellDeathPrefab.SetActive(true);
             Destroy(gameObject);
-            // gameObject.SetActive(false);
         }
     }
 }
